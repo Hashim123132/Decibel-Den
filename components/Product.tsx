@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Product as ProductType } from '../sanity.types';
 import {urlFor} from '../sanity/lib/client'
+import Image from 'next/image';
 type Props = {
   productProp: ProductType;
   
@@ -20,10 +21,10 @@ const Product =  ({ productProp }: Props)=> {
         {/* whole div containing a single product with its detail */}
         <div className='product-card'>
           
-          <img src={imageUrl} 
+          <Image src={imageUrl} 
           width={250}
           height={250}          
-          alt={name}
+          alt='product image'
           className='product-image'
           />
           <p className='product-name'>{name}</p>

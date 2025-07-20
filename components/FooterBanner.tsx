@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import{Banner} from  '../sanity.types';
 import {urlFor} from '../sanity/lib/client'
+import Image from 'next/image';
 
 type Props = {
   footerBanner: Banner | null;
@@ -35,7 +36,7 @@ const FooterBanner = ({footerBanner}:Props) => {
           </button>
         </Link>
         {/* we are importing image from banner schema not product schema */}
-         <img src={image? urlFor(image).url():''} alt="footer banner"
+         <Image height={450} width={450} src={image? urlFor(image).url():''} alt="footer banner"
         className="footer-banner-image" />
         </div>
       </div>
