@@ -12,6 +12,9 @@ body, * {
   box-sizing: border-box;
 
 }
+.toast-success .toast-icon {
+  color: rgb(34 197 94) !important;
+}
 ::-webkit-scrollbar {
   width: 0px;
 }

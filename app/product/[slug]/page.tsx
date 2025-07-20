@@ -1,4 +1,3 @@
-// app/product/[slug]/page.tsx
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -6,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { client, urlFor } from '../../../sanity/lib/client';
 import Image from 'next/image';
 import Product from '../../../components/Product';
+import { useStateContext } from '../../context/StateContext'
 
 import {
   AiFillStar,
@@ -17,24 +17,31 @@ import type { Product as ProductType } from '../../../sanity.types';
 
 export const dynamic = 'force-dynamic'; // (optional) always render on the server and rehydrate
 
+//whenn this component is mounted the useEffect will run to fetch data
+
 export default function ProductPage() {
   const { slug } = useParams<{ slug: string }>();
   const [product, setProduct] = useState<ProductType | null>(null);
   const [related, setRelated] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
+  const { decQty, incQty, qty, onAdd } = useStateContext()
 
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
 
-    const fetchData = async() => {
+    //fetch data has product data + related products data
+    //in previous commit i have changed this file for some issues and used useEffect().
+    
+    const fetchData = async () => {
       const q1 = `*[_type == "product" && slug.current == $slug][0]`;
       const q2 = `*[_type == "product"]`;
       const [prod, rel] = await Promise.all([
         client.fetch(q1, { slug }),
         client.fetch(q2),
       ]);
+      
       setProduct(prod);
       setRelated(rel);
       setLoading(false);
@@ -46,7 +53,18 @@ export default function ProductPage() {
   if (loading) return <p>Loading…</p>;
   if (!product) return <p>Product not found.</p>;
 
-  const { name, price, details, image } = product;
+  const { _id, name, price, details, image } = product;
+
+  // convert ProductType to CartItem format by including quantity field
+  const handleAddToCart = () => {
+  onAdd({
+    _id: _id || '',
+    name: name || 'Unnamed Product',
+    price: price || 0,
+    image: image ?? [], // default to empty array if undefined
+    quantity: qty,
+  }, qty);
+}
 
   return (
     <div>
@@ -54,7 +72,7 @@ export default function ProductPage() {
         <div>
           <div className="image-container">
             <Image
-            className='product-detail-image'
+              className='product-detail-image'
               src={image?.[index] ? urlFor(image[index]).url() : ''}
               alt={name ?? ''}    // if name is undefined, use empty string
               width={500}
@@ -94,18 +112,18 @@ export default function ProductPage() {
           <div className="quantity">
             <h3>Quantity:</h3>
             <div className="quantity-desc flex">
-              <span className="minus">
+              <span className="minus" onClick={decQty}>
                 <AiOutlineMinus />
               </span>
-              <span className="num">0</span>
-              <span className="plus">
+              <span className="num">{qty}</span>
+              <span className="plus" onClick={incQty}>
                 <AiOutlinePlus />
               </span>
             </div>
           </div>
 
           <div className="buttons">
-            <button className="add-to-cart">Add to Cart</button>
+            <button className="add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
             <button className="buy-now">Buy Now</button>
           </div>
         </div>

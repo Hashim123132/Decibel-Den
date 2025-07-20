@@ -14,7 +14,7 @@ type SanityImageSource = {
   }
 }
 
-import { apiVersion, dataset, projectId, token } from '../env'
+import { apiVersion, dataset, projectId, token } from '../../sanity/env'
 //Creating the Sanity client
 
 export const client = createClient({

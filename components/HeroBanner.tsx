@@ -31,7 +31,7 @@ const HeroBanner = ({ heroBanner }: Props) => {
         
         </Link>
         <div className="desc">
-          <h5>Descriptiom</h5>
+          <h5>Description</h5>
           <p>{heroBanner.desc}</p>
         </div>
       </div>
