@@ -9,7 +9,7 @@ import { client } from '../sanity/lib/client'
 import FooterBanner from '../components/FooterBanner'
 import HeroBanner from '../components/HeroBanner'
 import Product from '../components/Product'
-
+import { BannerWithSlug } from '../ sanity.overrides'; 
 import StripeSuccessToast from '../components/StripeSuccessToast'
 
 
@@ -17,7 +17,7 @@ const HomePage = () => {
 
  
   const [products, setProducts] = useState<ProductType[]>([])
-  const [bannerData, setBannerData] = useState<BannerType[]>([])
+  const [bannerData, setBannerData] = useState<BannerWithSlug[]>([])
 
   // stripe success toast
  
@@ -25,7 +25,23 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const queryProducts = '*[_type == "product"]'
-      const queryBanner = '*[_type == "banner"]'
+      const queryBanner = `*[_type == "banner"]{
+  ...,
+  image,
+  product->{
+    slug
+  },
+  slides[]{
+    image,
+    buttonText,
+    product->{
+      name,
+      slug
+    }
+  }
+}`;
+                   
+                  
 
       const productsResult = await client.fetch(queryProducts)
       const bannerResult = await client.fetch(queryBanner)

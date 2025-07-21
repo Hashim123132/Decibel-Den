@@ -108,49 +108,91 @@ export interface Banner extends SanityDocument {
   };
 
   /**
-   * ButtonText — `string`
+   * Images — `array`
+   *
+   *
+   */
+  images?: Array<
+    SanityKeyed<{
+      _type: "image";
+      asset: SanityReference<SanityImageAsset>;
+      crop?: SanityImageCrop;
+      hotspot?: SanityImageHotspot;
+    }>
+  >;
+
+  /**
+   * Button Text — `string`
    *
    *
    */
   buttonText?: string;
 
   /**
-   * Product — `string`
+   * Slides — `array`
    *
    *
    */
-  product?: string;
+  slides?: Array<
+    SanityKeyed<{
+      /**
+       * image — `image`
+       *
+       *
+       */
+      image?: {
+        _type: "image";
+        asset: SanityReference<SanityImageAsset>;
+        crop?: SanityImageCrop;
+        hotspot?: SanityImageHotspot;
+      };
+
+      /**
+       * product — `reference`
+       *
+       *
+       */
+      product?: SanityReference<Product>;
+
+      /**
+       * Button Text — `string`
+       *
+       *
+       */
+      buttonText?: string;
+    }>
+  >;
 
   /**
-   * Desc — `string`
+   * Description — `string`
    *
    *
    */
   desc?: string;
 
   /**
-   * SmallText — `string`
+   * Small Text — `string`
    *
    *
    */
   smallText?: string;
 
   /**
-   * MidText — `string`
+   * Mid Text — `string`
    *
    *
    */
   midText?: string;
 
   /**
-   * LargeText1 — `string`
+   * Large Text 1 — `string`
    *
    *
    */
   largeText1?: string;
 
   /**
-   * LargeText2 — `string`
+   * Large Text 2 — `string`
    *
    *
    */
@@ -164,7 +206,7 @@ export interface Banner extends SanityDocument {
   discount?: string;
 
   /**
-   * SaleTime — `string`
+   * Sale Time — `string`
    *
    *
    */

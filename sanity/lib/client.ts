@@ -6,13 +6,14 @@ import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 //This is a utility that helps generate real image URLs from the image data
 
-type SanityImageSource = {
-  _type: 'image',
-  asset: {
-    _ref: string,
-    _type: 'reference'
-  }
-}
+// type SanityImageSource = {
+//   _type: 'image',
+//   asset: {
+//     _ref: string,
+//     _type: 'reference'
+//   }
+// }
+
 
 import { apiVersion, dataset, projectId, token } from '../../sanity/env'
 //Creating the Sanity client
@@ -32,4 +33,4 @@ export const client = createClient({
 // The client gives context (project ID & dataset) so imageUrlBuilder knows where to fetch images from.
 const builder = imageUrlBuilder(client);
 //source must match the shape of sanityImagesource type
-export const urlFor = (source: SanityImageSource) => builder.image(source)
+export const urlFor = (source: any) => builder.image(source);

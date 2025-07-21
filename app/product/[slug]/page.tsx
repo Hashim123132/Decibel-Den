@@ -1,5 +1,5 @@
 'use client';
-
+//this is the product page where we see add to cart button and you may also like products
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { client, urlFor } from '../../../sanity/lib/client';
