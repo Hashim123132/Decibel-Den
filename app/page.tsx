@@ -9,7 +9,7 @@ import { client } from '../sanity/lib/client'
 import FooterBanner from '../components/FooterBanner'
 import HeroBanner from '../components/HeroBanner'
 import Product from '../components/Product'
-import { BannerWithSlug } from '../ sanity.overrides'; 
+import {BannerWithSlug} from '../components/BannerWithSlug';
 import StripeSuccessToast from '../components/StripeSuccessToast'
 
 
@@ -25,21 +25,16 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const queryProducts = '*[_type == "product"]'
-      const queryBanner = `*[_type == "banner"]{
+    
+      //for banner
+    const queryBanner = `*[_type == "banner"]{
   ...,
   image,
   product->{
     slug
-  },
-  slides[]{
-    image,
-    buttonText,
-    product->{
-      name,
-      slug
-    }
   }
-}`;
+}`
+
                    
                   
 

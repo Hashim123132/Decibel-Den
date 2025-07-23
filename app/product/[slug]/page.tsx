@@ -14,6 +14,8 @@ import {
   AiOutlineStar,
 } from 'react-icons/ai';
 import type { Product as ProductType } from '../../../sanity.types';
+import { toast } from 'sonner';
+import getStripe from '@/lib/getStripe';
 
 export const dynamic = 'force-dynamic'; // (optional) always render on the server and rehydrate
 
@@ -25,7 +27,7 @@ export default function ProductPage() {
   const [related, setRelated] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
-  const { decQty, incQty, qty, onAdd } = useStateContext()
+  const { decQty, incQty, qty, onAdd, cartItems } = useStateContext()
 
   useEffect(() => {
     if (!slug) return;
@@ -65,6 +67,32 @@ export default function ProductPage() {
     quantity: qty,
   }, qty);
 }
+const handleCheckout = async ()=>{
+    const stripe = await getStripe();
+
+    const response = await fetch('/api/stripe', {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+     body: JSON.stringify([{
+          _id: product._id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: qty
+        }])
+    });
+    if(response.status === 500) return
+
+    const data = await response.json();
+
+    toast.loading('Redirecting...')
+//one instance of checkout
+  //this will keep data of user even if they are gone so if the return and countinue with the   purchase they will be able to do so
+    stripe?.redirectToCheckout( {sessionId: data.id})
+  }
+
 
   return (
     <div>
@@ -124,7 +152,7 @@ export default function ProductPage() {
 
           <div className="buttons">
             <button className="add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
-            <button className="buy-now">Buy Now</button>
+            <button className="buy-now"onClick={handleCheckout}>Buy Now</button>
           </div>
         </div>
       </div>

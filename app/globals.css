@@ -2,8 +2,13 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 html,
+html {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
 body, * {
   padding: 0;
   margin: 0;

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {urlFor} from '../sanity/lib/client'
 import Image from 'next/image';
-import { BannerWithSlug } from '../ sanity.overrides';
+import {BannerWithSlug} from '../components/BannerWithSlug';
 
 type Props = {
   footerBanner: BannerWithSlug | null;
@@ -30,7 +30,7 @@ const FooterBanner = ({footerBanner}:Props) => {
           <p>{smallText}</p>
           <h3>{midText}</h3>
           <p>{desc}</p>
-       <Link href={`/product/${product?.slug?.current}`}>
+      <Link href={`/product/${footerBanner.product?.slug?.current}`}>
 
           <button type='button'>
             {buttonText}
