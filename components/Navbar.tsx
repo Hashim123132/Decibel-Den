@@ -24,7 +24,14 @@ const Navbar = () => {
           <p className="logo">
 
             <Link href="/Headphones">
-              Headphones
+              Headwear
+            </Link>
+          </p>
+
+           <p className="logo">
+
+            <Link href="/Speakers">
+              Speakers
             </Link>
           </p>
          

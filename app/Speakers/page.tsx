@@ -10,7 +10,7 @@ const ProductDisplayPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const query = '*[_type == "product" && category == "headphones"]'
+      const query = '*[_type == "product" && category == "speakers"]'
       const result = await client.fetch(query)
       setProducts(result)
     }
@@ -21,8 +21,8 @@ const ProductDisplayPage = () => {
   return (
     <>
       <div className="products-heading">
-        <h2>Headwear Collections</h2>
-        <p>Experience the best in comfort, sound, and design</p>
+        <h2>All Products</h2>
+        <p>Explore the collection</p>
       </div>
 
       <div className="products-container">

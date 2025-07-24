@@ -85,6 +85,13 @@ export interface Product extends SanityDocument {
    *
    */
   details?: string;
+
+  /**
+   * Category — `string`
+   *
+   *
+   */
+  category?: "headphones" | "speakers" | "headphones";
 }
 
 /**

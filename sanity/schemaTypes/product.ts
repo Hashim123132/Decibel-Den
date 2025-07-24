@@ -48,7 +48,20 @@ export default {
             name:'details',
             title:'Details',
             type:'string'
-        }
+        },
+        {
+          name: 'category',
+          title: 'Category',
+          type: 'string',
+          options: {
+            list: [
+            { title: 'Headphones', value: 'headphones' },
+            { title: 'Speakers', value: 'speakers' },
+            { title: 'Earphones', value: 'headphones' },
+    ],
+    layout: 'dropdown',
+  },
+}
 
 
 
