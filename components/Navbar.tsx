@@ -4,6 +4,8 @@ import { AiOutlineShopping } from "react-icons/ai";
 import Cart from "./Cart";
 import { useStateContext } from "@/app/context/StateContext";
 import { MobileNav } from "./MobileNav";
+import { Input } from "@/components/ui/input"
+import { Search } from "lucide-react"
 const Navbar = () => {
   const {showCart, setShowCart, totalQuantities} = useStateContext();
   return (
@@ -36,7 +38,14 @@ const Navbar = () => {
               Speakers
             </Link>
           </p>
-         
+       <div className="relative w-full max-w-sm mx-auto">
+          <Search className="absolute left-37 top-2 h-5 w-5 text-gray-400 " />
+          <Input
+            type="search"
+            placeholder="Search products..."
+            className="pl-10 rounded-xl "
+          />
+        </div>
       </div>
 
         <button

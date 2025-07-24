@@ -15,7 +15,10 @@
   margin-left: 20px;
 }
 
-
+Input{
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
 .mobilenav a {
   transition: transform 0.2s ease, color 0.2s ease;
 }
