@@ -3,13 +3,15 @@ import Link from "next/link"
 import { AiOutlineShopping } from "react-icons/ai";
 import Cart from "./Cart";
 import { useStateContext } from "@/app/context/StateContext";
+import { MobileNav } from "./MobileNav";
 const Navbar = () => {
   const {showCart, setShowCart, totalQuantities} = useStateContext();
   return (
   <div className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
  
-  <div className="text-xl  text-gray-500">
-    <Link href="/">Decibel Den</Link>
+  <div className="custom-nav">
+    <MobileNav />
+    <Link href="/" className="hidden md:block">Decibel Den</Link>
   </div>
 
         <div className="nav-btns">

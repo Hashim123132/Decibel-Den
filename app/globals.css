@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+.custom-nav {
+  font-size: 1.25rem;        
+  color: #6B7280;           
+  display: flex;            
+  gap: 1.5rem;               
+}
+.mobilenav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  font-size:22px;
+  line-height: 50px;
+  margin-left: 20px;
+}
 
+
+.mobilenav a {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mobilenav a:hover {
+  transform: scale(1.05);
+  color: #1f2937; /* Optional: Tailwind's gray-800 equivalent */
+}
 
 .nav-btns{
   display: flex;
