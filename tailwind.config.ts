@@ -3,8 +3,9 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
+   './app/**/*.{ts,tsx}', 
+  './components/**/*.{ts,tsx}',
+  './styles/**/*.{css}'
   ],
   darkMode: "class", // <<< REQUIRED for toggle to work
   theme: {

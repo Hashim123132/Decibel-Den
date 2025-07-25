@@ -11,7 +11,7 @@ type Props = {
 const FooterBanner = ({footerBanner}:Props) => {
   
     if (!footerBanner) return null;
-    const{desc, largeText1, largeText2, saleTime, smallText, midText, discount, buttonText, image,product } = footerBanner
+    const{desc, largeText1, largeText2, saleTime, smallText, midText, discount, buttonText, image } = footerBanner
     // const imageUrl = image && image[0] ? urlFor(image[0]).url() : '';
   
   return (

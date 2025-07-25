@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense} from 'react'
 
-import { Product as ProductType, Banner as BannerType } from '../sanity.types'
+import { Product as ProductType, } from '../sanity.types'
 //we have created a sanity.types folder which makes interface of Product based on schemaType
 
 import { client } from '../sanity/lib/client' 

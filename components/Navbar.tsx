@@ -11,9 +11,10 @@ const Navbar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext()
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 bg-white shadow-md flex-wrap gap-2">
+    <div className="flex items-center justify-between px-6 py-4  shadow-md flex-wrap gap-2 ">
       
       {/* Left: Logo & MobileNav (always show MobileNav, hide logo on small screens) */}
+      
       <div className="flex items-center gap-4">
         <MobileNav />
         <Link href="/" className="hidden md:block text-xl font-semibold">

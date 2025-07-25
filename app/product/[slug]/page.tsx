@@ -27,7 +27,7 @@ export default function ProductPage() {
   const [related, setRelated] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
-  const { decQty, incQty, qty, onAdd, cartItems } = useStateContext()
+  const { decQty, incQty, qty, onAdd,  } = useStateContext()
 
   useEffect(() => {
     if (!slug) return;
@@ -125,13 +125,13 @@ const handleCheckout = async ()=>{
 
         <div className="product-detail-desc">
           <h1>{name}</h1>
-          <div className="reviews flex">
+          <div className="reviews ">
             <AiFillStar />
             <AiFillStar />
             <AiFillStar />
             <AiFillStar />
             <AiOutlineStar />
-            <p>(20)</p>
+            <p className='numberofratings'>(20)</p>
           </div>
           <h4>Details:</h4>
           <p>{details}</p>

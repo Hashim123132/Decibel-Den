@@ -53,7 +53,7 @@ const Cart = () => {
         {cartItems.length < 1 && (
           <div className="empty-cart">
             <AiOutlineShopping size={150}/>
-            <h1 className="">Your shopping bag is empty </h1>
+            <h1 >Your shopping bag is empty </h1>
             <Link href='/'>
              
               <button type="button" onClick={() => setShowCart(false)} className="btn">
@@ -80,9 +80,9 @@ const Cart = () => {
       
       {/* mapped item name and price */}
         
-        <div className="flex ">
-          <h4 className="font-bold">{item.name}</h4>
-          <h5>${item.price}</h5>
+        <div className=" revealedCartItems ">
+          <h4 className="">{item.name}</h4>
+          <h5 className="revealedItemsPrice">${item.price}</h5>
         </div>
 
         <div className="flex bottom">

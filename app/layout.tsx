@@ -6,6 +6,7 @@ import "./globals.css";
 import Layout from '../components/Layout';
 import { StateContext } from "./context/StateContext";
 import { Toaster } from "../components/ui/sonner"
+import { ThemeProvider } from "next-themes";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,18 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+     <html lang="en" suppressHydrationWarning>
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <StateContext>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+            <StateContext>
 
               <Layout>
                 <Toaster />
-                {children}
+                    {children}
               </Layout>
           </StateContext>
+                </ThemeProvider>
       </body>
     </html>
   );
