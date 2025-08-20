@@ -1,23 +1,22 @@
 'use client'
 
-import { useEffect, useState, Suspense} from 'react'
+import { useEffect, useState, Suspense } from 'react'
 
-import { Product as ProductType, } from '../sanity.types'
+import { Product as ProductType } from '../sanity.types'
 //we have created a sanity.types folder which makes interface of Product based on schemaType
 
 import { client } from '../sanity/lib/client' 
 import FooterBanner from '../components/FooterBanner'
 import HeroBanner from '../components/HeroBanner'
 import Product from '../components/Product'
-import {BannerWithSlug} from '../components/BannerWithSlug';
+import { BannerWithSlug } from '../components/BannerWithSlug';
 import StripeSuccessToast from '../components/StripeSuccessToast'
-
 
 const HomePage = () => {
 
- 
   const [products, setProducts] = useState<ProductType[]>([])
   const [bannerData, setBannerData] = useState<BannerWithSlug[]>([])
+  const [heroCarousel, setHeroCarousel] = useState<any>(null) // state for heroCarousel
 
   // stripe success toast
  
@@ -27,22 +26,38 @@ const HomePage = () => {
       const queryProducts = '*[_type == "product"]'
     
       //for banner
-    const queryBanner = `*[_type == "banner"]{
-  ...,
-  image,
-  product->{
-    slug
-  }
-}`
+      const queryBanner = `*[_type == "banner"]{
+        ...,
+        image,
+        product->{
+          slug
+        }
+      }`
 
-                   
-                  
+      //for hero carousel
+      const queryHeroCarousel = `*[_type == "heroCarousel"][0]{
+        title,
+        banners[]->{
+          image,
+          buttonText,
+          product->{ slug },
+          desc,
+          smallText,
+          midText,
+          largeText1,
+          largeText2,
+          discount,
+          saleTime
+        }
+      }`
 
       const productsResult = await client.fetch(queryProducts)
       const bannerResult = await client.fetch(queryBanner)
+      const heroCarouselResult = await client.fetch(queryHeroCarousel)
 
       setProducts(productsResult)
       setBannerData(bannerResult)
+      setHeroCarousel(heroCarouselResult)
     }
 
     fetchData()
@@ -50,7 +65,7 @@ const HomePage = () => {
 
   return (
     <>
-      <HeroBanner heroBanner={bannerData.length > 0 ? bannerData[0] : null} />
+      <HeroBanner heroCarousel={heroCarousel} />
       <Suspense fallback={null}>
         <StripeSuccessToast />
       </Suspense>
