@@ -178,4 +178,27 @@ export interface Banner extends SanityDocument {
   saleTime?: string;
 }
 
-export type Documents = Product | Banner;
+/**
+ * Hero Carousel
+ *
+ *
+ */
+export interface HeroCarousel extends SanityDocument {
+  _type: "heroCarousel";
+
+  /**
+   * Carousel Title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * Banners — `array`
+   *
+   *
+   */
+  banners?: Array<SanityKeyedReference<Banner>>;
+}
+
+export type Documents = Product | Banner | HeroCarousel;

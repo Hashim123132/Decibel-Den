@@ -20,6 +20,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Decibel Den",
 description: "Your one-stop shop.",
+  icons: {
+    icon: "/DecibelDen.png", // path relative to the public folder
+    shortcut: "/DecibelDen.png",
+  },
 };
 
 export default function RootLayout({

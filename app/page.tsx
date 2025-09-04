@@ -2,9 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 
-import { Product as ProductType } from '../sanity.types'
-//we have created a sanity.types folder which makes interface of Product based on schemaType
-
+import { Product as ProductType, HeroCarousel as HeroCarouselType } from '../sanity.types'
 import { client } from '../sanity/lib/client' 
 import FooterBanner from '../components/FooterBanner'
 import HeroBanner from '../components/HeroBanner'
@@ -16,48 +14,50 @@ const HomePage = () => {
 
   const [products, setProducts] = useState<ProductType[]>([])
   const [bannerData, setBannerData] = useState<BannerWithSlug[]>([])
-  const [heroCarousel, setHeroCarousel] = useState<any>(null) // state for heroCarousel
+  const [heroCarousel, setHeroCarousel] = useState<HeroCarouselType | null>(null)
 
-  // stripe success toast
- 
-  // fetch data from sanity
   useEffect(() => {
     const fetchData = async () => {
-      const queryProducts = '*[_type == "product"]'
-    
-      //for banner
-      const queryBanner = `*[_type == "banner"]{
-        ...,
-        image,
-        product->{
-          slug
-        }
-      }`
+      try {
+        // Products
+        const productsResult: ProductType[] = await client.fetch('*[_type == "product"]')
+        setProducts(productsResult)
 
-      //for hero carousel
-      const queryHeroCarousel = `*[_type == "heroCarousel"][0]{
-        title,
-        banners[]->{
+        // Banner
+        const bannerResult: BannerWithSlug[] = await client.fetch(`*[_type == "banner"]{
+          ...,
           image,
-          buttonText,
-          product->{ slug },
-          desc,
-          smallText,
-          midText,
-          largeText1,
-          largeText2,
-          discount,
-          saleTime
-        }
-      }`
+          product->{
+            slug
+          }
+        }`)
+        setBannerData(bannerResult)
 
-      const productsResult = await client.fetch(queryProducts)
-      const bannerResult = await client.fetch(queryBanner)
-      const heroCarouselResult = await client.fetch(queryHeroCarousel)
+        // Hero Carousel (resolved references with ->)
+        const heroCarouselResult: HeroCarouselType | null = await client.fetch(`*[_type == "heroCarousel"][0]{
+          title,
+          banners[]->{
+            _id,
+            _createdAt,
+            _rev,
+            _updatedAt,
+            image,
+            buttonText,
+            product->{ slug },
+            desc,
+            smallText,
+            midText,
+            largeText1,
+            largeText2,
+            discount,
+            saleTime
+          }
+        }`)
+        setHeroCarousel(heroCarouselResult || null)
 
-      setProducts(productsResult)
-      setBannerData(bannerResult)
-      setHeroCarousel(heroCarouselResult)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
     }
 
     fetchData()
@@ -66,6 +66,7 @@ const HomePage = () => {
   return (
     <>
       <HeroBanner heroCarousel={heroCarousel} />
+
       <Suspense fallback={null}>
         <StripeSuccessToast />
       </Suspense>
@@ -76,8 +77,7 @@ const HomePage = () => {
       </div>
       
       <div className="products-container">
-        {/* mapped products should go in Product component by using productProp which have value of whole object element of array (named product also) */}
-        {products?.map((product) => (
+        {products.map((product) => (
           <Product 
             key={product._id}
             productProp={product}
@@ -85,7 +85,7 @@ const HomePage = () => {
         ))}
       </div>
 
-      <FooterBanner footerBanner={bannerData && bannerData[0]} />
+      <FooterBanner footerBanner={bannerData[0]} />
     </>
   )
 }

@@ -27,6 +27,7 @@ const Navbar = () => {
         <Link href="/ProductDisplayPage" className="logo">Products</Link>
         <Link href="/Headphones" className="logo">Headwear</Link>
         <Link href="/Speakers" className="logo">Speakers</Link>
+        <Link href="/contact" className="logo">Contact Us</Link>
       </div>
 
       {/* Search Bar - always visible */}

@@ -1,31 +1,19 @@
 import HeroCarousel from "./HeroCarousel";
-
-type Banner = {
-  image: any;
-  buttonText: string;
-  product?: { slug?: { current: string } };
-  desc: string;
-  smallText: string;
-  midText: string;
-  largeText1: string;
-  largeText2: string;
-  discount: string;
-  saleTime: string;
-};
+import { HeroCarousel as HeroCarouselType, Banner as BannerType } from "../sanity.types";
 
 type Props = {
-  heroCarousel: {
-    title: string;
-    banners: Banner[];
-  } | null;
+  heroCarousel: HeroCarouselType | null;
 };
 
 const HeroBanner = ({ heroCarousel }: Props) => {
-  if (!heroCarousel) return null;
+  if (!heroCarousel || !heroCarousel.banners) return null;
+
+  // Force TypeScript to treat resolved references as actual Banner objects
+  const banners: BannerType[] = heroCarousel.banners.map((b) => b as unknown as BannerType);
 
   return (
     <section className="hero-banner-container my-6">
-      <HeroCarousel banners={heroCarousel.banners} />
+      <HeroCarousel banners={banners} />
     </section>
   );
 };
